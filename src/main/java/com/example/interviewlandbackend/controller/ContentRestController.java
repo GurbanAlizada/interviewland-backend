@@ -47,10 +47,11 @@ public class ContentRestController {
     }
 
 
-    @GetMapping("/content/{id}")
-    public ResponseEntity<ContentDto> getContentById(@PathVariable int id){
-        return ResponseEntity.ok(contentService.getContentById(id));
-    }
+//    @GetMapping("/content/{id}")
+//    public ResponseEntity<ContentDto> getContentById(@PathVariable int id){
+//        return ResponseEntity.ok(contentService.getContentById(id));
+//    }
+
 
 
 //    @GetMapping

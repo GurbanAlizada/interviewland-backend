@@ -11,6 +11,7 @@ public class CreateSectionRequest {
     @NotNull
     private int contentId;
 
+
     public String getSectionName() {
         return sectionName;
     }

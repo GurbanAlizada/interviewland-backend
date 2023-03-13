@@ -11,4 +11,14 @@ public class SectionDto {
         this.id = id;
         this.sectionName = sectionName;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getSectionName() {
+        return sectionName;
+    }
+
+
 }

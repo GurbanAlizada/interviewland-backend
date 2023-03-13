@@ -19,8 +19,7 @@ public class Subscribe implements Serializable {
     public Subscribe() {
     }
 
-    public Subscribe(int id, String email) {
-        this.id = id;
+    public Subscribe( String email) {
         this.email = email;
     }
 

@@ -3,6 +3,7 @@ package com.example.interviewlandbackend.service;
 import com.example.interviewlandbackend.dto.request.CreateQuestionRequest;
 import com.example.interviewlandbackend.dto.request.UpdateQuestionRequest;
 import com.example.interviewlandbackend.dto.response.QuestionDto;
+import com.example.interviewlandbackend.exception.QuestionNotFoundException;
 import com.example.interviewlandbackend.model.Content;
 import com.example.interviewlandbackend.model.Question;
 import com.example.interviewlandbackend.model.Section;
@@ -82,7 +83,10 @@ public class QuestionService {
 
 
     protected  Question getById(int id){
-        return questionRepository.findById(id).orElseThrow();
+        return questionRepository.findById(id)
+                .orElseThrow(
+                        () -> new QuestionNotFoundException("could not found by question id : "  + id)
+                );
     }
 
 

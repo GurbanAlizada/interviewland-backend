@@ -7,6 +7,7 @@ import com.example.interviewlandbackend.service.SectionService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -22,14 +23,14 @@ public class SectionRestController {
 
 
     @PostMapping
-    public ResponseEntity<Void> createSection(CreateSectionRequest request){
+    public ResponseEntity<Void> createSection(@RequestBody @Valid CreateSectionRequest request){
         sectionService.createSection(request);
         return ResponseEntity.ok().build();
     }
 
 
     @PutMapping
-    public ResponseEntity<Void> updateSection(UpdateSectionRequest request){
+    public ResponseEntity<Void> updateSection(@RequestBody @Valid UpdateSectionRequest request){
         sectionService.updateSection(request);
         return ResponseEntity.ok().build();
     }
@@ -41,7 +42,7 @@ public class SectionRestController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping()
+    @GetMapping
     public ResponseEntity<List<SectionDto>> getAllSections(@RequestParam int contentId){
         return  ResponseEntity.ok(sectionService.getAllSections(contentId));
     }

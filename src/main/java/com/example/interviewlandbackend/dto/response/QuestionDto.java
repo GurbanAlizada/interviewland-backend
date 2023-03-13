@@ -20,4 +20,25 @@ public class QuestionDto {
         this.sourceCode = sourceCode;
         this.sectionId = sectionId;
     }
+
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getSourceCode() {
+        return sourceCode;
+    }
+
+    public int getSectionId() {
+        return sectionId;
+    }
+
+    public int getQuestionId() {
+        return questionId;
+    }
 }

@@ -20,4 +20,6 @@ public class UpdateContentRequest {
     public int getId() {
         return id;
     }
+
+
 }

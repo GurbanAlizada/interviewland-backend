@@ -14,8 +14,12 @@ public class Question implements Serializable {
 
     private String questionTitle;
 
+    @Column(columnDefinition="TEXT")
+    @Lob
     private String description;
 
+    @Column(columnDefinition="TEXT")
+    @Lob
     private String sourceCode;
 
 
