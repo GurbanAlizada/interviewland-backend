@@ -4,7 +4,6 @@ import com.example.interviewlandbackend.dto.request.CreateQuestionRequest;
 import com.example.interviewlandbackend.dto.request.UpdateQuestionRequest;
 import com.example.interviewlandbackend.dto.response.QuestionDto;
 import com.example.interviewlandbackend.exception.QuestionNotFoundException;
-import com.example.interviewlandbackend.model.Content;
 import com.example.interviewlandbackend.model.Question;
 import com.example.interviewlandbackend.model.Section;
 import com.example.interviewlandbackend.repository.QuestionRepository;
@@ -33,8 +32,11 @@ public class QuestionService {
     @Transactional
     public void createQuestion(CreateQuestionRequest request) {
         Section section = sectionService.getById(request.getSectionId());
-        Question question = new Question(request.getQuestionTitle() ,
-                request.getDescription() , request.getSourceCode() , section);
+        Question question = new Question(
+                request.getQuestionTitle() ,
+                request.getDescription() ,
+                request.getSourceCode() ,
+                section);
         questionRepository.save(question);
     }
 
@@ -67,14 +69,7 @@ public class QuestionService {
         List<Question> questions = questionRepository.getAllBySection_Id(sectionId , PageRequest.of(pageNo - 1, size , sort));
 
         List<QuestionDto> result = questions.stream()
-                .map(n -> new QuestionDto(
-                        n.getId(),
-                        n.getQuestionTitle(),
-                        n.getDescription(),
-                        n.getSourceCode(),
-                        n.getSection().getId()
-                        )
-                )
+                .map(n->QuestionDto.convert(n))
                 .collect(Collectors.toList());
         return result;
     }

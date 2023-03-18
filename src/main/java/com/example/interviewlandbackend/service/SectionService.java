@@ -26,6 +26,7 @@ public class SectionService {
     }
 
 
+    // refactor after security
     @Transactional
     public void createSection(CreateSectionRequest request) {
         Content content = contentService.getById(request.getContentId());
@@ -34,6 +35,7 @@ public class SectionService {
     }
 
 
+    // refactor after security
     @Transactional
     public void updateSection(UpdateSectionRequest request) {
         Section section = getById(request.getId());
@@ -45,6 +47,7 @@ public class SectionService {
 
 
 
+    // refactor after security
     @Transactional
     public void deleteSection(int id) {
         Section section = getById(id);
@@ -52,13 +55,11 @@ public class SectionService {
     }
 
 
+
     public List<SectionDto> getAllSections(int contentId) {
         List<Section> sections = sectionRepository.getAllByContent_Id(contentId);
         List<SectionDto> result = sections.stream()
-                .map(n -> new SectionDto(
-                        n.getId() ,
-                        n.getSectionName())
-                )
+                .map(n -> SectionDto.convert(n))
                 .collect(Collectors.toList());
         return result;
     }

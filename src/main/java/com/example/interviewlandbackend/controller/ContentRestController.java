@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -22,14 +23,15 @@ public class ContentRestController {
     }
 
 
-    @PostMapping
-    public ResponseEntity<Void> createContent(@RequestBody @Valid CreateContentRequest request){
+    @PostMapping(value ="/add",consumes = {"multipart/form-data" },produces = "application/json")
+    public ResponseEntity<Void> createContent(@Valid @ModelAttribute CreateContentRequest request){
         contentService.createContent(request);
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping
-    public ResponseEntity<Void> updateContent(@Valid @RequestBody UpdateContentRequest request){
+
+    @PutMapping(consumes = {"multipart/form-data" },produces = "application/json")
+    public ResponseEntity<Void> updateContent(@Valid @ModelAttribute UpdateContentRequest request) throws IOException {
         contentService.updateContent(request);
         return ResponseEntity.ok().build();
     }

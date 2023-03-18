@@ -7,7 +7,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface ContentRepository extends JpaRepository<Content , Integer> {
+public interface ContentRepository extends JpaRepository<Content, Integer> {
 
 
     // https://stackoverflow.com/questions/18853452/sql-select-like-insensitive-casing

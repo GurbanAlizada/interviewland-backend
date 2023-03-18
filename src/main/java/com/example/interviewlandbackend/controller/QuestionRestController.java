@@ -5,7 +5,6 @@ import com.example.interviewlandbackend.dto.request.CreateQuestionRequest;
 import com.example.interviewlandbackend.dto.request.UpdateQuestionRequest;
 import com.example.interviewlandbackend.dto.response.QuestionDto;
 import com.example.interviewlandbackend.service.QuestionService;
-import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -46,7 +45,7 @@ public class QuestionRestController {
 
 
     @GetMapping
-    public ResponseEntity<List<QuestionDto>> getAllQuestionByContentId(@RequestParam int sectionId ,@RequestParam int pageNo ,@RequestParam int size){
+    public ResponseEntity<List<QuestionDto>> getAllQuestionByContentId(@RequestParam int sectionId , @RequestParam int pageNo , @RequestParam int size){
         return ResponseEntity.ok(questionService.getAllQuestionByContentId(sectionId , pageNo , size));
     }
 
