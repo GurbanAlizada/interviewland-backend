@@ -8,11 +8,13 @@ import com.example.interviewlandbackend.dto.response.ContentDto;
 import com.example.interviewlandbackend.exception.ContentNotFoundException;
 import com.example.interviewlandbackend.model.Content;
 import com.example.interviewlandbackend.model.Image;
+import com.example.interviewlandbackend.model.User;
 import com.example.interviewlandbackend.repository.ContentRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
+import java.nio.file.AccessDeniedException;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -22,40 +24,52 @@ public class ContentService {
 
     private final ContentRepository contentRepository;
     private final CloudinaryServiceInter cloudinaryServiceInter;
+    private final AuthService authService;
+    private final ImageService imageService;
 
-    public ContentService(ContentRepository contentRepository, CloudinaryServiceInter cloudinaryServiceInter) {
+    public ContentService(ContentRepository contentRepository, CloudinaryServiceInter cloudinaryServiceInter, AuthService authService, ImageService imageService) {
         this.contentRepository = contentRepository;
         this.cloudinaryServiceInter = cloudinaryServiceInter;
+        this.authService = authService;
+        this.imageService = imageService;
     }
 
 
-    // after security refactor user
     @Transactional
     public void createContent(CreateContentRequest request) {
         Map<String, String> map = cloudinaryServiceInter.uploadImage(request.getImage());
         final String imageUrl = map.get("secure_url");
         final String publishId = map.get("public_id");
         Image image = new Image(imageUrl , publishId );
-        Content content = new Content(request.getContentName() , request.getDescription() , image , null);
+        User user = authService.getAuthenticatedUser();
+        Content content = new Content(request.getContentName() , request.getDescription() , image , user);
         contentRepository.save(content);
     }
 
 
-    // after refactor security
     @Transactional
     public void updateContent(UpdateContentRequest request) throws IOException {
         Content content = getById(request.getId());
-        content.setDescription(request.getDescription());
-        content.setContentName(request.getContentName());
-        if (request.getPhoto() != null){
-            cloudinaryServiceInter.deleteImage(content.getImage().getPublishId());
-            Map<String, String> map = cloudinaryServiceInter.uploadImage(request.getPhoto());
-            final String imageUrl = map.get("secure_url");
-            final String publishId = map.get("public_id");
-            Image image = new Image(imageUrl , publishId);
-            content.setImage(image);
+        User authenticatedUser = authService.getAuthenticatedUser();
+
+        if (content.getUser().getId() == authenticatedUser.getId() || authenticatedUser.getRole().toString().equals("SUPER_ADMIN") ){
+            content.setDescription(request.getDescription());
+            content.setContentName(request.getContentName());
+            if (request.getPhoto() != null){
+                cloudinaryServiceInter.deleteImage(content.getImage().getPublishId());
+                imageService.deleteImage(content.getImage().getId());
+                Map<String, String> map = cloudinaryServiceInter.uploadImage(request.getPhoto());
+                final String imageUrl = map.get("secure_url");
+                final String publishId = map.get("public_id");
+                Image image = new Image(imageUrl , publishId);
+                content.setImage(image);
+            }
+            contentRepository.save(content);
+
+        }else{
+            throw new AccessDeniedException("ACCESS DENIED ! ");
         }
-        contentRepository.save(content);
+
     }
 
 
@@ -64,9 +78,18 @@ public class ContentService {
 
     @Transactional
     // after refactor security
-    public void deleteContent(int id) {
+    public void deleteContent(int id) throws IOException {
         Content content = getById(id);
-        contentRepository.delete(content);
+        User authenticatedUser = authService.getAuthenticatedUser();
+
+        if (content.getUser().getId() == authenticatedUser.getId() || authenticatedUser.getRole().toString().equals("SUPER_ADMIN")  ){
+            cloudinaryServiceInter.deleteImage(content.getImage().getPublishId());
+            contentRepository.delete(content);
+        }else{
+            throw new AccessDeniedException("ACCESS DENIED ! ");
+        }
+
+
     }
 
 

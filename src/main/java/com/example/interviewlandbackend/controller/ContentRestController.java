@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.io.IOException;
+import java.nio.file.AccessDeniedException;
 import java.util.List;
 
 @RestController
@@ -37,7 +38,7 @@ public class ContentRestController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> deleteContent(@PathVariable int id){
+    public ResponseEntity<Void> deleteContent(@PathVariable int id) throws IOException {
         contentService.deleteContent(id);
         return ResponseEntity.ok().build();
     }

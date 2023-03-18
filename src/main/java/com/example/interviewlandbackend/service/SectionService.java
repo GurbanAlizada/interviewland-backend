@@ -7,10 +7,12 @@ import com.example.interviewlandbackend.dto.response.SectionDto;
 import com.example.interviewlandbackend.exception.SectionNotFoundException;
 import com.example.interviewlandbackend.model.Content;
 import com.example.interviewlandbackend.model.Section;
+import com.example.interviewlandbackend.model.User;
 import com.example.interviewlandbackend.repository.SectionRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.nio.file.AccessDeniedException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,39 +21,76 @@ public class SectionService {
 
     private final SectionRepository sectionRepository;
     private final ContentService contentService;
+    private final AuthService authService;
 
-    public SectionService(SectionRepository sectionRepository, ContentService contentService) {
+
+
+    public SectionService(SectionRepository sectionRepository, ContentService contentService, AuthService authService) {
         this.sectionRepository = sectionRepository;
         this.contentService = contentService;
+        this.authService = authService;
     }
 
 
-    // refactor after security
     @Transactional
-    public void createSection(CreateSectionRequest request) {
+    public void createSection(CreateSectionRequest request) throws AccessDeniedException {
+
+
         Content content = contentService.getById(request.getContentId());
-        Section section = new Section(request.getSectionName() , content);
-        sectionRepository.save(section);
+        User authenticatedUser = authService.getAuthenticatedUser();
+
+
+        if (content.getUser().getId() == authenticatedUser.getId() || authenticatedUser.getRole().toString().equals("SUPER_ADMIN")  ){
+
+            Section section = new Section(request.getSectionName() , content);
+            sectionRepository.save(section);
+
+        }else{
+            throw new AccessDeniedException("ACCESS DENIED ! ");
+        }
+
+
+
+
+
     }
 
 
-    // refactor after security
     @Transactional
-    public void updateSection(UpdateSectionRequest request) {
+    public void updateSection(UpdateSectionRequest request) throws AccessDeniedException {
         Section section = getById(request.getId());
         Content content = contentService.getById(request.getContentId());
-        section.setSectionName(request.getSectionName());
-        section.setContent(content);
-        sectionRepository.save(section);
+        User authenticatedUser = authService.getAuthenticatedUser();
+
+
+        if (content.getUser().getId() == authenticatedUser.getId() || authenticatedUser.getRole().toString().equals("SUPER_ADMIN")  ){
+
+            section.setSectionName(request.getSectionName());
+            section.setContent(content);
+            sectionRepository.save(section);
+
+
+        }else{
+            throw new AccessDeniedException("ACCESS DENIED ! ");
+        }
+
+
+
     }
 
 
 
-    // refactor after security
     @Transactional
-    public void deleteSection(int id) {
+    public void deleteSection(int id) throws AccessDeniedException {
         Section section = getById(id);
-        sectionRepository.delete(section);
+        User authenticatedUser = authService.getAuthenticatedUser();
+
+        if (section.getContent().getUser().getId() == authenticatedUser.getId() || authenticatedUser.getRole().toString().equals("SUPER_ADMIN")  ){
+            sectionRepository.delete(section);
+        }else{
+            throw new AccessDeniedException("ACCESS DENIED ! ");
+        }
+
     }
 
 

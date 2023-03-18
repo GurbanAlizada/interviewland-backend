@@ -1,5 +1,6 @@
 package com.example.interviewlandbackend.model
 
+import java.io.Serializable
 import javax.persistence.*
 
 @Entity
@@ -14,7 +15,7 @@ data class Image @JvmOverloads constructor(
 
     val publishId: String
 
-){
+):Serializable{
 
     constructor (imageUrl: String , publishId: String) : this(
         id = 0,

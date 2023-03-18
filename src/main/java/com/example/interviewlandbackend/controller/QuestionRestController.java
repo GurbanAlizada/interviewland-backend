@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.nio.file.AccessDeniedException;
 import java.util.List;
 
 @RestController
@@ -24,21 +25,21 @@ public class QuestionRestController {
 
 
     @PostMapping
-    public ResponseEntity<Void> createQuestion(@Valid @RequestBody CreateQuestionRequest request){
+    public ResponseEntity<Void> createQuestion(@Valid @RequestBody CreateQuestionRequest request) throws AccessDeniedException {
         questionService.createQuestion(request);
         return ResponseEntity.ok().build();
     }
 
 
     @PutMapping
-    public ResponseEntity<Void> updateQuestion(@Valid @RequestBody UpdateQuestionRequest request){
+    public ResponseEntity<Void> updateQuestion(@Valid @RequestBody UpdateQuestionRequest request) throws AccessDeniedException {
         questionService.updateQuestion(request);
         return ResponseEntity.ok().build();
     }
 
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> deleteQuestion(@PathVariable int id){
+    public ResponseEntity<Void> deleteQuestion(@PathVariable int id) throws AccessDeniedException {
         questionService.deleteQuestion(id);
         return ResponseEntity.ok().build();
     }

@@ -1,5 +1,6 @@
 package com.example.interviewlandbackend.model
 
+import java.io.Serializable
 import javax.persistence.*
 
 @Entity
@@ -25,4 +26,4 @@ data class Question @JvmOverloads constructor(
     var section: Section
 
 
-)
+):Serializable

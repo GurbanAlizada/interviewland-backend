@@ -1,8 +1,9 @@
 package com.example.interviewlandbackend.controller;
 
 
-import com.example.interviewlandbackend.dto.request.CreateUserRequst;
+import com.example.interviewlandbackend.dto.request.CreateUserRequest;
 import com.example.interviewlandbackend.service.UserService;
+import com.sun.xml.bind.v2.TODO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,11 +23,17 @@ public class UserRestController {
         this.userService = userService;
     }
 
-    @PostMapping
-    public ResponseEntity<Void> createUser(@Valid @RequestBody CreateUserRequst request){
-        userService.createUser(request);
+    //TODO email and username already exists exception
+
+    @PostMapping("/admin-register")
+    public ResponseEntity<Void> createAdmin(@Valid @RequestBody CreateUserRequest request){
+        userService.createAdmin(request);
         return ResponseEntity.ok().build();
     }
+
+
+
+
 
 
 

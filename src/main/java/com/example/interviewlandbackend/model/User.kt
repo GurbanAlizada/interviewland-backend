@@ -1,5 +1,6 @@
 package com.example.interviewlandbackend.model
 
+import java.io.Serializable
 import javax.persistence.*
 
 
@@ -10,8 +11,14 @@ data class User @JvmOverloads constructor(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Int?=0,
+
+    @Column(unique = true)
     val username: String,
+
     val password: String,
+
+    @Column(unique = true)
+    val email: String,
 
     @Enumerated(EnumType.STRING)
     val role: Role,
@@ -20,5 +27,4 @@ data class User @JvmOverloads constructor(
     val contents : List<Content>? = ArrayList()
 
 
-
-)
+):Serializable

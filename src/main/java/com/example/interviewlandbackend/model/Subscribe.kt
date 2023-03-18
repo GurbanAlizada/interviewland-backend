@@ -1,5 +1,6 @@
 package com.example.interviewlandbackend.model
 
+import java.io.Serializable
 import javax.persistence.*
 
 
@@ -12,4 +13,4 @@ data class Subscribe @JvmOverloads constructor(
     val id: Int?=0,
     val email: String
 
-)
+):Serializable

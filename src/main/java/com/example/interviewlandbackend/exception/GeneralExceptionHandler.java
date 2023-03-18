@@ -51,6 +51,26 @@ public class GeneralExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(exception.getMessage() , HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<?> handle(UserNotFoundException exception){
+        return new ResponseEntity<>(exception.getMessage() , HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(ImageNotFoundException.class)
+    public ResponseEntity<?> handle(ImageNotFoundException exception){
+        return new ResponseEntity<>(exception.getMessage() , HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(TokenNotFoundException.class)
+    public ResponseEntity<?> handle(TokenNotFoundException exception){
+        return new ResponseEntity<>(exception.getMessage() , HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<?> handle(AccessDeniedException exception){
+        return new ResponseEntity<>(exception.getMessage() , HttpStatus.BAD_REQUEST);
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> handle(Exception exception){
         return new ResponseEntity<>(exception.getMessage() , HttpStatus.NOT_FOUND);

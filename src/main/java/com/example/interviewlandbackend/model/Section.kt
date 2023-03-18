@@ -1,5 +1,6 @@
 package com.example.interviewlandbackend.model
 
+import java.io.Serializable
 import javax.persistence.*
 
 
@@ -21,4 +22,4 @@ data class Section @JvmOverloads constructor(
     @OneToMany(mappedBy = "section" , cascade = arrayOf(CascadeType.ALL) )
     val questions: List<Question>? = ArrayList()
 
-)
+):Serializable

@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.nio.file.AccessDeniedException;
 import java.util.List;
 
 @RestController
@@ -23,21 +24,21 @@ public class SectionRestController {
 
 
     @PostMapping
-    public ResponseEntity<Void> createSection(@RequestBody @Valid CreateSectionRequest request){
+    public ResponseEntity<Void> createSection(@RequestBody @Valid CreateSectionRequest request) throws AccessDeniedException {
         sectionService.createSection(request);
         return ResponseEntity.ok().build();
     }
 
 
     @PutMapping
-    public ResponseEntity<Void> updateSection(@RequestBody @Valid UpdateSectionRequest request){
+    public ResponseEntity<Void> updateSection(@RequestBody @Valid UpdateSectionRequest request) throws AccessDeniedException {
         sectionService.updateSection(request);
         return ResponseEntity.ok().build();
     }
 
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> deleteSection(@PathVariable int id){
+    public ResponseEntity<Void> deleteSection(@PathVariable int id) throws AccessDeniedException {
         sectionService.deleteSection(id);
         return ResponseEntity.ok().build();
     }
