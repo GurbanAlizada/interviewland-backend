@@ -51,7 +51,7 @@ public class SecurityConfig {
                 .cors()
                 .and()
                 .authorizeRequests((auth)->{   // will refactor
-                    auth.antMatchers( HttpMethod.POST ,"/v1/auth/**").permitAll();
+                    auth.antMatchers( HttpMethod.POST ,"/v1/auth/**" , "/v1/subscribe").permitAll();
                     auth.antMatchers( HttpMethod.POST ,"/v1/users/admin-register").hasAuthority("SUPER_ADMIN");
                     auth.antMatchers( HttpMethod.GET , "/v1/contents").permitAll();
                     auth.antMatchers(  "/v1/contents" , "/v1/contents/delete/{id}" ).hasAnyAuthority("ADMIN" , "SUPER_ADMIN");
@@ -59,6 +59,7 @@ public class SecurityConfig {
                     auth.antMatchers(  "/v1/sections" ,"/v1/sections/delete/{id}" ).hasAnyAuthority("ADMIN","SUPER_ADMIN");
                     auth.antMatchers( HttpMethod.GET , "/v1/questions").permitAll();
                     auth.antMatchers( "/v1/questions" , "/v1/questions/delete/{id}").hasAnyAuthority("ADMIN" , "SUPER_ADMIN");
+                    auth.antMatchers( HttpMethod.POST,"/v1/subscribe/sendEmail/{id}" ).hasAnyAuthority("ADMIN" , "SUPER_ADMIN");
                     auth.anyRequest().authenticated();
                 })
                 .formLogin().disable()

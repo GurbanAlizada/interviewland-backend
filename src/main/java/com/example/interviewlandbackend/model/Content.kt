@@ -28,7 +28,10 @@ data class Content @JvmOverloads constructor(
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    val user: User?
+    val user: User?,
+
+    @OneToMany(mappedBy = "content")
+    val subscribes : List<Subscribe>? = ArrayList()
 
 
 ):Serializable{

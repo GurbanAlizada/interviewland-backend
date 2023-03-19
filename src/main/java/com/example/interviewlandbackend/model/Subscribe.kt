@@ -11,6 +11,14 @@ data class Subscribe @JvmOverloads constructor(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Int?=0,
-    val email: String
 
-):Serializable
+    val email: String,
+
+    @ManyToOne
+    @JoinColumn(name = "contentId")
+    val content: Content
+
+):Serializable{
+
+
+}
