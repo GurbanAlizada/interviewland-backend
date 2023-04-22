@@ -1,7 +1,9 @@
 package com.example.interviewlandbackend.model
 
 import java.io.Serializable
+import java.util.*
 import javax.persistence.*
+import kotlin.collections.ArrayList
 
 
 @Entity
@@ -31,7 +33,9 @@ data class Content @JvmOverloads constructor(
     val user: User?,
 
     @OneToMany(mappedBy = "content")
-    val subscribes : List<Subscribe>? = ArrayList()
+    val subscribes : List<Subscribe>? = ArrayList(),
+
+    val creationDate: Date?=null
 
 
 ):Serializable{

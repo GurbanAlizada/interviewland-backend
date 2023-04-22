@@ -1,7 +1,9 @@
 package com.example.interviewlandbackend.model
 
 import java.io.Serializable
+import java.util.*
 import javax.persistence.*
+import kotlin.collections.ArrayList
 
 
 @Entity
@@ -20,6 +22,9 @@ data class Section @JvmOverloads constructor(
 
 
     @OneToMany(mappedBy = "section" , cascade = arrayOf(CascadeType.ALL) )
-    val questions: List<Question>? = ArrayList()
+    val questions: List<Question>? = ArrayList(),
+
+    val date: Date?= Date(System.currentTimeMillis())
+
 
 ):Serializable

@@ -10,6 +10,7 @@ import java.io.UnsupportedEncodingException;
 
 @RestController
 @RequestMapping("/v1/subscribe")
+@CrossOrigin
 public class SubscribeRestController {
 
     private final SubscribeService subscribeService;
@@ -26,8 +27,15 @@ public class SubscribeRestController {
     }
 
 
-    @PostMapping("/sendEmail/{id}")
-    public ResponseEntity<String> sendEmailByContentId(@PathVariable int id , String link) throws MessagingException, UnsupportedEncodingException {
+    // TODO unsubscribe
+    public ResponseEntity<Void> unsubscribe(){
+
+        return null;
+    }
+
+
+    @PostMapping("/sendEmail")
+    public ResponseEntity<String> sendEmailByContentId(@RequestParam int id ,@RequestParam String link) throws MessagingException, UnsupportedEncodingException {
         int userSize = subscribeService.sendEmailByContentId(id , link);
         return ResponseEntity.ok("Istifadecilere mail gonderildi! .Mail gonderilmis istifadeci sayi : " + userSize);
     }

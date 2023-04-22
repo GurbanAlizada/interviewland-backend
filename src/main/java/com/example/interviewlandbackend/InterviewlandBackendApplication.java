@@ -36,7 +36,8 @@ public class InterviewlandBackendApplication implements CommandLineRunner {
                     "super-admin" ,
                     bCryptPasswordEncoder.encode("12345678") ,
                     "qurbanelizade77@gmail.com" ,
-                    Role.SUPER_ADMIN);
+                    Role.SUPER_ADMIN
+            );
             userRepository.save(user);
         }
 

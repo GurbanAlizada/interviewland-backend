@@ -1,7 +1,7 @@
 package com.example.interviewlandbackend.service;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -16,6 +16,12 @@ public class MailService {
 
     private final JavaMailSender mailSender;
 
+    @Value("${spring.mail.username}")
+    private String EMAIL_ADDRESS;
+
+    @Value("${mail-sender.personal-name}")
+    private String EMAIL_PERSONAL;
+
     public MailService(JavaMailSender mailSender) {
         this.mailSender = mailSender;
     }
@@ -25,7 +31,7 @@ public class MailService {
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);
 
-        helper.setFrom("gurbanalizada011@gmail.com", "Gurban Alizada");
+        helper.setFrom(EMAIL_ADDRESS, EMAIL_PERSONAL);
         helper.setTo(userEmail);
 
         String subject = "Interview Land";
@@ -42,4 +48,6 @@ public class MailService {
 
         mailSender.send(message);
     }
+
+
 }

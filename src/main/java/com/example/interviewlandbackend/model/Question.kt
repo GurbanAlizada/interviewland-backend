@@ -1,6 +1,7 @@
 package com.example.interviewlandbackend.model
 
 import java.io.Serializable
+import java.util.*
 import javax.persistence.*
 
 @Entity
@@ -23,7 +24,9 @@ data class Question @JvmOverloads constructor(
 
     @ManyToOne
     @JoinColumn(name = "section_id")
-    var section: Section
+    var section: Section,
+
+    val date: Date?=Date(System.currentTimeMillis())
 
 
 ):Serializable

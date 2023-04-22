@@ -1,7 +1,9 @@
 package com.example.interviewlandbackend.model
 
 import java.io.Serializable
+import java.util.*
 import javax.persistence.*
+import kotlin.collections.ArrayList
 
 
 @Entity
@@ -24,7 +26,10 @@ data class User @JvmOverloads constructor(
     val role: Role,
 
     @OneToMany(cascade = arrayOf(CascadeType.ALL))
-    val contents : List<Content>? = ArrayList()
+    val contents : List<Content>? = ArrayList() ,
+
+    @Column(name = "creation_date")
+    val createdDate: Date?= Date(System.currentTimeMillis())
 
 
 ):Serializable

@@ -1,6 +1,7 @@
 package com.example.interviewlandbackend.model
 
 import java.io.Serializable
+import java.util.*
 import javax.persistence.*
 
 
@@ -16,7 +17,10 @@ data class Subscribe @JvmOverloads constructor(
 
     @ManyToOne
     @JoinColumn(name = "contentId")
-    val content: Content
+    val content: Content,
+
+    val date: Date?= Date(System.currentTimeMillis())
+
 
 ):Serializable{
 

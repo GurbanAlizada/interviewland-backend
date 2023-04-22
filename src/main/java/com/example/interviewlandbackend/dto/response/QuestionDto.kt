@@ -1,6 +1,7 @@
 package com.example.interviewlandbackend.dto.response
 
 import com.example.interviewlandbackend.model.Question
+import java.util.*
 
 data class QuestionDto @JvmOverloads constructor(
 
@@ -8,7 +9,8 @@ data class QuestionDto @JvmOverloads constructor(
     val questionTitle: String,
     val description: String,
     val sourceCode: String,
-    val sectionId: Int?
+    val sectionId: Int?,
+    val createdDate: Date?
 
 ){
 
@@ -20,7 +22,8 @@ data class QuestionDto @JvmOverloads constructor(
                 question.questionTitle,
                 question.description,
                 question.sourceCode,
-                question.section.id
+                question.section.id,
+                question.date
             )
         }
 

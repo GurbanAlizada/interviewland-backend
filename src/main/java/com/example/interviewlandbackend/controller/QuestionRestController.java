@@ -14,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/v1/questions")
+@CrossOrigin
 public class QuestionRestController {
 
     private final QuestionService questionService;

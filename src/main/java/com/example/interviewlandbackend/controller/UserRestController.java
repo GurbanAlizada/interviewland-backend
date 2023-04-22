@@ -5,15 +5,13 @@ import com.example.interviewlandbackend.dto.request.CreateUserRequest;
 import com.example.interviewlandbackend.service.UserService;
 import com.sun.xml.bind.v2.TODO;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/v1/users")
+@CrossOrigin
 public class UserRestController {
 
     private final UserService userService;
